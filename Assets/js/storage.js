@@ -49,3 +49,11 @@ function Case(caseID, status, plaintiff, defendant, courtLevel, judge, caseOpene
         this.judge = newJudge;
     }
 }
+
+// Request Objects to store handle the request 
+function Request(requestID, requestType, handled, userRequested) {
+    this.requestID = requestID;
+    this.requestType = requestType;
+    this.requested = userRequested;
+    this.handled = handled;
+}
