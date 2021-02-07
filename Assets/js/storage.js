@@ -1,4 +1,8 @@
-//Objects Design
+//Objects and Database Design
+
+/* This file should only be opened whenever there 
+    is an operation required on the database
+*/
 
 // User Object has a name,access and password (Early design may be subject to change)
 function User(userName, accessType, password){
@@ -57,3 +61,44 @@ function Request(requestID, requestType, handled, userRequested) {
     this.requested = userRequested;
     this.handled = handled;
 }
+
+//Global Variable to hold the database
+let Court;
+//Opening database upon document loading
+document.addEventListener('DOMContentLoaded', () => {
+    let db = indexedDB.open("CourtSystem", 1);
+
+    // Initialize the database
+    db.onupgradeneeded = function(e){
+        db = e.target.result;
+        //Creating the Object store and the necessary indices for the db 
+        let cases = db.createObjectStore("Cases", {keyPath : 'caseID'});
+        cases.createIndex('by_caseno', 'caseID', {unique:true});
+        cases.createIndex('by_judge', 'judge');
+        cases.createIndex('by_status', 'status');
+        cases.createIndex('by_nextDate', 'nextCourtDate');
+        cases.createIndex('by_level', 'courtLevel');
+        cases.createIndex('by_plaintiff', 'plaintiff');
+        cases.createIndex('by_defendant', 'defendant');
+        
+
+        let users = db.createObjectStore('Users',{keyPath : 'userName'});
+        users.createIndex('by_password', 'password');
+        users.createIndex('by_access', 'accessType');
+
+        let userRequests = db.createObjectStore('Request');
+        userRequests.createIndex('by_requestID', 'requestID');
+        userRequests.createIndex('by_status', 'handled');
+        userRequests.createIndex('by_request_type', 'requestType'); 
+    };
+
+    //Assign to global variable if database already exists
+    db.onsuccess = function() {
+        Court = db.result; 
+    };
+
+    db.onerror = function() {
+        // console.log("Error opening database");
+    }
+
+});
