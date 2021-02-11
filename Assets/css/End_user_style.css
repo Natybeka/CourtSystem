@@ -1,0 +1,10 @@
+
+body{
+    background-color: rgba(105, 114, 113, 0.9);
+    font-family: 'Poppins', sans-serif;
+}
+nav{
+    margin: 3rem 3rem;
+    border-radius: 2rem;
+}
+
