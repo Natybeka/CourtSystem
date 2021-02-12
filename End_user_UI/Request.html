@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Court_system</title>
     <link rel="stylesheet" href="../Assets/css/bootstrap.min.css" >
-    <link rel="stylesheet" href="../Assets/css/user_style.css" >
+    <link rel="stylesheet" href="../Assets/css/End_user_style.css" >
     <link href="https://fonts.googleapis.com/css?family=Baloo+Thambi+2&display=swap" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
@@ -38,7 +38,38 @@
           
         </div>
       </nav>
-
+      <div class="card container">
+        <div class="card-body">
+          <h5 class="card-title">File a new request</h5>
+          <p class="card-text">After sending this request your case will be reviewed and if found 
+            sufficient it will be approved and a court date will be assigned,Thank you!</p>
+              <div class="row">
+                <div class="col-md-2 pl-12">
+                    <div class="form-group">
+                        <label for="case_type">Case Type:</label>
+                    </div>   
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input type="text" id="case_type" placeholder="Case type" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label for="txarea">Case description</label>
+                        <textarea class="form-control" id="txarea" rows="4"></textarea>
+                      </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <button class="btn btn-info btn-lg ">File a request</button>
+                </div>
+            </div>
+        </div>
+      </div>
 
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
