@@ -21,8 +21,8 @@ function User(userName, fullName, accessType, password){
     5. courtLevel (level at which the case is currently being heard)
     6. judge
     7. caseOpened date at which case has been opened
-    8. description for the case
-    9. nextCourtDate
+    8. description for the case 
+    9. nextCourtDate 
     
     and finally methods
     changing courtLevel and status
@@ -94,18 +94,26 @@ document.addEventListener('DOMContentLoaded', () => {
         let users = db.createObjectStore('Users',{keyPath : 'userName'});
         users.createIndex('by_password', 'password');
         users.createIndex('by_access', 'accessType');
+        
 
         let userRequests = db.createObjectStore('Request');
         userRequests.createIndex('by_requestID', 'requestID');
         userRequests.createIndex('by_status', 'handled');
         userRequests.createIndex('by_request_type', 'requestType');
         
-        let judges = db.createOnjectStore('Judges',{keyPath : 'userName'});
+        let judges = db.createObjectStore('Judges',{keyPath : 'userName'});
     };
 
     //Assign to global variable if database already exists
     db.onsuccess = function() {
-        Court = db.result; 
+        Court = db.result;
+        // console.log("Database is ready"); 
+        // let userObject = Court.transaction("Users", "readwrite").objectStore("Users");
+        // userObject.add(new User("uniqueUser", "Natnael Bekabtu", "User", "zembel26"));
+        // console.log("Added first User");
+        // let userObject2 = Court.transaction("Users", "readwrite").objectStore("Users");
+        // userObject2.add(new User("uniqueUser2", "Natnael Bekabtu", "User", "zembel27"));
+        // console.log("Added seconde User");
     };
 
     db.onerror = function() {
