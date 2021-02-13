@@ -31,3 +31,14 @@ nav{
     background-color:rgba(65, 71, 70,0.5) ;
     color: rgb(219, 243, 237);
 }
+.copy_right{
+    color: rgb(150, 150, 150);
+    font-size: 1rem;  
+    margin-top: 1rem;
+}
+.fo-row{
+    justify-content: center;
+}
+footer{
+    margin-top: 6rem;
+}
