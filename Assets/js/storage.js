@@ -5,10 +5,11 @@
 */
 
 // User Object has a name,access and password (Early design may be subject to change)
-function User(userName, accessType, password){
+function User(userName, fullName, accessType, password){
     this.userName = userName;
     this.accessType = accessType;
-    this.password = password; 
+    this.password = password;
+    this.fullName = fullName; 
 }
 
 /*  
@@ -26,7 +27,7 @@ function User(userName, accessType, password){
     and finally methods
     changing courtLevel and status
 */
-function Case(caseID, status, plaintiff, defendant, courtLevel, judge, caseOpened, description, nextCourtDate) {
+function Case(caseID, status, plaintiff, defendant, courtLevel, judge, caseOpened, description) {
     this.caseID = caseID;
     this.status = status;
     this.plaintiff = plaintiff;
@@ -35,7 +36,8 @@ function Case(caseID, status, plaintiff, defendant, courtLevel, judge, caseOpene
     this.caseOpened = caseOpened;
     this.description = description;
     this.judge = judge;
-    this.nextCourtDate = nextCourtDate;
+    // Will be implemented later
+    // this.nextCourtDate = nextCourtDate;
     
     this.changeStatus = function(newStatus) {
         if (newStatus != this.status) {
@@ -60,6 +62,13 @@ function Request(requestID, requestType, handled, userRequested) {
     this.requestType = requestType;
     this.requested = userRequested;
     this.handled = handled;
+}
+
+// Jusdge Objects
+function Judge(cases, userName, fullName) {
+    this.cases = cases;
+    this.userName = userName;
+    this.fullName = fullName;
 }
 
 //Global Variable to hold the database
@@ -89,7 +98,9 @@ document.addEventListener('DOMContentLoaded', () => {
         let userRequests = db.createObjectStore('Request');
         userRequests.createIndex('by_requestID', 'requestID');
         userRequests.createIndex('by_status', 'handled');
-        userRequests.createIndex('by_request_type', 'requestType'); 
+        userRequests.createIndex('by_request_type', 'requestType');
+        
+        let judges = db.createOnjectStore('Judges',{keyPath : 'userName'});
     };
 
     //Assign to global variable if database already exists
