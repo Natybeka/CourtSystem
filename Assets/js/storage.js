@@ -21,8 +21,8 @@ function User(userName, fullName, accessType, password){
     5. courtLevel (level at which the case is currently being heard)
     6. judge
     7. caseOpened date at which case has been opened
-    8. description for the case
-    9. nextCourtDate
+    8. description for the case 
+    9. nextCourtDate 
     
     and finally methods
     changing courtLevel and status
@@ -100,12 +100,13 @@ document.addEventListener('DOMContentLoaded', () => {
         userRequests.createIndex('by_status', 'handled');
         userRequests.createIndex('by_request_type', 'requestType');
         
-        let judges = db.createOnjectStore('Judges',{keyPath : 'userName'});
+        let judges = db.createObjectStore('Judges',{keyPath : 'userName'});
     };
 
     //Assign to global variable if database already exists
     db.onsuccess = function() {
-        Court = db.result; 
+        Court = db.result;
+        console.log("Database is ready"); 
     };
 
     db.onerror = function() {
