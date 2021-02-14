@@ -11,11 +11,17 @@ nav{
 }
 
 .nav-link{
-    line-height: 2rem;
+    line-height: 1.5rem;
+}
+
+.nav-link:hover{
+    text-decoration: underline;
 }
 .active {
     color: black;
+    font-weight: bolder;
 }
+
 .card{
     background-color: rgba(105, 114, 113, 0.9);
     color: rgb(219, 243, 237);

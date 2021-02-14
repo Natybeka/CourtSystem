@@ -2,8 +2,10 @@
 const url = new URLSearchParams(window.location.search);
 const userName = url.get("user");
 const caseContainer = document.querySelector("#case-container");
+const welcome = document.querySelector("#welcome-header");    
 
-
+welcome.innerHTML = "Welcome " + userName + ", get on top of your active cases today";
+welcome.style.fontSize = "2rem";
 
 // Fetch data from the data-base and load content
 function loadUserData() {
@@ -41,9 +43,7 @@ function loadUserData() {
             }
         }
 
-    }
-
-    
+    }   
 
 }
 
