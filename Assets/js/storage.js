@@ -98,10 +98,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let userRequests = db.createObjectStore('Request');
         userRequests.createIndex('by_requestID', 'requestID');
-        userRequests.createIndex('by_status', 'handled');
-        userRequests.createIndex('by_request_type', 'requestType');
+        userRequests.createIndex('by_status', 'handled'); 
+End_user_UI
+        userRequests.createIndex('by_request_type', 'requestType'); 
+        
+=======
+      
         
         let judges = db.createObjectStore('Judges',{keyPath : 'userName'});
+ master
     };
 
     //Assign to global variable if database already exists
@@ -119,5 +124,6 @@ document.addEventListener('DOMContentLoaded', () => {
     db.onerror = function() {
         // console.log("Error opening database");
     }
-
+    
 });
+

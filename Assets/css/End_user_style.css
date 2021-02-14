@@ -1,0 +1,44 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+body{
+    background-color: rgba(105, 114, 113, 0.9);
+    font-family: 'Poppins', sans-serif;
+}
+nav{
+    margin: 3rem 3rem;
+    border-radius: 2rem;
+}
+
+.card{
+    background-color: rgba(105, 114, 113, 0.9);
+    color: rgb(219, 243, 237);
+    width: 80rem;
+    margin: 1rem 2rem;
+}
+.card-link{
+    color: rgb(219, 243, 237);
+}
+.card-link:hover{
+    color: rgb(54, 56, 56);
+}
+.list-group>li{
+    background-color: rgba(105, 114, 113, 0.9);
+    color: rgb(219, 243, 237);
+}
+
+.btn{
+    background-color:rgba(65, 71, 70,0.5) ;
+    color: rgb(219, 243, 237);
+}
+.copy_right{
+    color: rgb(150, 150, 150);
+    font-size: 1rem;  
+    margin-top: 1rem;
+}
+.fo-row{
+    justify-content: center;
+}
+footer{
+    margin-top: 6rem;
+}
