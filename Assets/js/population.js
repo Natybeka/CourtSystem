@@ -1,7 +1,7 @@
 // extract user key from url resource key to access database
 const url = new URLSearchParams(window.location.search);
 const userName = url.get("user");
-
+const caseContainer = document.querySelector("#case-container");
 
 
 
@@ -12,35 +12,33 @@ function loadUserData() {
     let court = indexedDB.open("CourtSystem", 1);
     court.onsuccess = function(e) {
         courtDB = e.target.result;
-        console.log("database opened");
         let userCases = courtDB.transaction("Cases").objectStore("Cases");
         let userView = '';
-    
-        let cursor = userCases.openCursor();
-        cursor.onsuccess = function(e) {
-            let cursor = e.target.result;
-            var activeCases = [];
-            if (cursor) {
+        let plaintiffIndex = userCases.index("by_plaintiff");
 
-                // Search for cases the user is involved in
-                // First handle plaintiff side then move on to defendant side
-                var caseObject = cursor.value;
-                
-                if (caseObject.plaintiff == userName && caseObject.status == "active") {
-                    //First track only active cases then idea can be extended
-                    activeCases.push(caseObject);
-                }
-                cursor.continue();
-            }
-
-            if (activeCases) {
-                console.log(activeCases)
+        let request = plaintiffIndex.getAll(userName);
+        request.onsuccess = function() {
+            if (request.result != undefined) {
+                let activeCases = request.result;
+                activeCases.forEach(item => {
+                    userView += `
+                    <div class="row">
+                                <div class="card col-12">
+                                    <div class="card-body">
+                                        <h5 class="card-title"> Case Title: ${item.plaintiff + " Vs " + item.defendant}</h5>
+                                        <h6 class="card-subtitle mb-2">Case Number: ${item.caseID}</h6>
+                                        <p class="card-text lead">${item.description}</p>
+                                        <a href="" class="btn btn-primary">See Detail</a>
+                                    </div>
+                                </div>
+                    </div>                       
+                    `
+                });
+                caseContainer.innerHTML = userView;               
             }
             else {
-                console.log("No active cases found");
+                console.log("User is not a plaintiff in any cases")
             }
-
-            console.log("cursor closed")
         }
 
     }
