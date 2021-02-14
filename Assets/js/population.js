@@ -19,12 +19,13 @@ function loadUserData() {
         let cursor = userCases.openCursor();
         cursor.onsuccess = function(e) {
             let cursor = e.target.result;
+            var activeCases = [];
             if (cursor) {
 
                 // Search for cases the user is involved in
                 // First handle plaintiff side then move on to defendant side
                 var caseObject = cursor.value;
-                var activeCases = [];
+                
                 if (caseObject.plaintiff == userName && caseObject.status == "active") {
                     //First track only active cases then idea can be extended
                     activeCases.push(caseObject);

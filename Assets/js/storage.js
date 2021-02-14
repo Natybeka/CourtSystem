@@ -39,21 +39,21 @@ function Case(caseID, status, plaintiff, defendant, courtLevel, judge, caseOpene
     // Will be implemented later
     // this.nextCourtDate = nextCourtDate;
     
-    this.changeStatus = function(newStatus) {
-        if (newStatus != this.status) {
-            this.status = newStatus;
-        }    
-    }
+    // this.changeStatus = function(newStatus) {
+    //     if (newStatus != this.status) {
+    //         this.status = newStatus;
+    //     }    
+    // }
     
-    this.changeCourtLevel = function(newCourtLevel) {
-        if (this.courtLevel != newCourtLevel) {
-            this.courtLevel = newCourtLevel;
-        }
-    }
+    // this.changeCourtLevel = function(newCourtLevel) {
+    //     if (this.courtLevel != newCourtLevel) {
+    //         this.courtLevel = newCourtLevel;
+    //     }
+    // }
 
-    this.changeJudge = function(newJudge) {
-        this.judge = newJudge;
-    }
+    // this.changeJudge = function(newJudge) {
+    //     this.judge = newJudge;
+    // }
 }
 
 // Request Objects to store handle the request 
@@ -106,15 +106,30 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     //Assign to global variable if database already exists
-    db.onsuccess = function() {
-        Court = db.result;
-        // console.log("Database is ready"); 
-        // let userObject = Court.transaction("Users", "readwrite").objectStore("Users");
-        // userObject.add(new User("uniqueUser", "Natnael Bekabtu", "User", "zembel26"));
-        // console.log("Added first User");
-        // let userObject2 = Court.transaction("Users", "readwrite").objectStore("Users");
-        // userObject2.add(new User("uniqueUser2", "Natnael Bekabtu", "User", "zembel27"));
-        // console.log("Added seconde User");
+    db.onsuccess = function(e) {
+        Court = e.target.result;
+        console.log("Database is ready"); 
+        let userObject = Court.transaction("Users", "readwrite").objectStore("Users");
+        userObject.add(new User("uniqueUser", "Natnael Bekabtu", "User", "zembel26"));
+        console.log("Added first User");
+        let userObject2 = Court.transaction("Users", "readwrite").objectStore("Users");
+        userObject2.add(new User("uniqueUser2", "Natnael Bekabtu", "User", "zembel27"));
+        console.log("Added seconde User");
+
+        let caseObject = Court.transaction("Cases","readwrite").objectStore("Cases");
+        caseObject.add(new Case("aw1","active","uniqueUser","uniqueUser2","firstInstance","Yemame234",new Date(),"This is the description for the first case"));
+
+        let caseObject2 = Court.transaction("Cases","readwrite").objectStore("Cases");
+        caseObject2.add(new Case("aw2","active","uniqueUser","uniqueUser2","firstInstance","Yemame234",new Date(),"This is the description for the another case"));
+
+        let caseObject3 = Court.transaction("Cases","readwrite").objectStore("Cases");
+        caseObject3.add(new Case("aw3","active","uniqueUser2","uniqueUser1","firstInstance","erwqwe34",new Date(),"This is the description for the third case"));
+
+        let caseObject4 = Court.transaction("Cases","readwrite").objectStore("Cases");
+        caseObject4.add(new Case("aw4","active","uniqueUser","uniqueUser2","firstInstance","Yemame234",new Date(),"This is the description for the first case"));
+
+        let caseObject5 = Court.transaction("Cases","readwrite").objectStore("Cases");
+        caseObject5.add(new Case("aw5","closed","uniqueUser2","uniqueUser","firstInstance","Yemame234",new Date(),"This is the description for the first case"));
     };
 
     db.onerror = function() {
