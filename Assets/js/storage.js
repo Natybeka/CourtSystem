@@ -5,10 +5,11 @@
 */
 
 // User Object has a name,access and password (Early design may be subject to change)
-function User(userName, accessType, password){
+function User(userName, fullName, accessType, password){
     this.userName = userName;
     this.accessType = accessType;
-    this.password = password; 
+    this.password = password;
+    this.fullName = fullName; 
 }
 
 /*  
@@ -20,13 +21,13 @@ function User(userName, accessType, password){
     5. courtLevel (level at which the case is currently being heard)
     6. judge
     7. caseOpened date at which case has been opened
-    8. description for the case
-    9. nextCourtDate
+    8. description for the case 
+    9. nextCourtDate 
     
     and finally methods
     changing courtLevel and status
 */
-function Case(caseID, status, plaintiff, defendant, courtLevel, judge, caseOpened, description, nextCourtDate) {
+function Case(caseID, status, plaintiff, defendant, courtLevel, judge, caseOpened, description) {
     this.caseID = caseID;
     this.status = status;
     this.plaintiff = plaintiff;
@@ -35,7 +36,8 @@ function Case(caseID, status, plaintiff, defendant, courtLevel, judge, caseOpene
     this.caseOpened = caseOpened;
     this.description = description;
     this.judge = judge;
-    this.nextCourtDate = nextCourtDate;
+    // Will be implemented later
+    // this.nextCourtDate = nextCourtDate;
     
     this.changeStatus = function(newStatus) {
         if (newStatus != this.status) {
@@ -62,6 +64,13 @@ function Request(requestID, requestType, handled, userRequested) {
     this.handled = handled;
 }
 
+// Jusdge Objects
+function Judge(cases, userName, fullName) {
+    this.cases = cases;
+    this.userName = userName;
+    this.fullName = fullName;
+}
+
 //Global Variable to hold the database
 let Court;
 //Opening database upon document loading
@@ -85,17 +94,31 @@ document.addEventListener('DOMContentLoaded', () => {
         let users = db.createObjectStore('Users',{keyPath : 'userName'});
         users.createIndex('by_password', 'password');
         users.createIndex('by_access', 'accessType');
+        
 
         let userRequests = db.createObjectStore('Request');
         userRequests.createIndex('by_requestID', 'requestID');
-        userRequests.createIndex('by_status', 'handled');
+        userRequests.createIndex('by_status', 'handled'); 
+End_user_UI
         userRequests.createIndex('by_request_type', 'requestType'); 
         
+=======
+      
+        
+        let judges = db.createObjectStore('Judges',{keyPath : 'userName'});
+ master
     };
 
     //Assign to global variable if database already exists
     db.onsuccess = function() {
-        Court = db.result; 
+        Court = db.result;
+        // console.log("Database is ready"); 
+        // let userObject = Court.transaction("Users", "readwrite").objectStore("Users");
+        // userObject.add(new User("uniqueUser", "Natnael Bekabtu", "User", "zembel26"));
+        // console.log("Added first User");
+        // let userObject2 = Court.transaction("Users", "readwrite").objectStore("Users");
+        // userObject2.add(new User("uniqueUser2", "Natnael Bekabtu", "User", "zembel27"));
+        // console.log("Added seconde User");
     };
 
     db.onerror = function() {

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Login</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<link rel="icon" type="" href=""/>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+	<link rel="stylesheet" type="text/css" href="Assets/css/loginStyle.css">
+	<link rel="shortcut icon" type="image/jpg" href="assets/images/balance-scale.jpg" />
+	<script type = "text/javascript" >  
+		function preventBack() { window.history.forward(); }  
+		setTimeout("preventBack()", 0);  
+		// window.onunload = function () { null };  
+	</script> 
+
+</head>
+<body>
+	
+	<div class="limiter">
+		<div class="container-login100" style="background-image: url('Assets/images/court1.jpg');">
+			<div class="wrap-login100">
+				<form class="login100-form validate-form" id="login-form">
+					<span class="login100-form-logo">
+						<i class="fa fa-balance-scale"></i>
+					</span>
+
+					<span class="login100-form-title p-b-34 p-t-27">
+						Log in
+					</span>
+
+					<div class="wrap-input100 validate-input" data-validate = "Enter username">
+						<input class="input100" type="text" name="username" placeholder="Username" id="userField" required="" oninvalid="this.setCustomValidity('Please Enter Your Username')" oninput="this.setCustomValidity('')" onfocus="hideMessage()">
+						<span class="focus-input100" data-placeholder="&#xf207;"><i class="fa fa-user fa-ig"></i></span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate="Enter password">
+						<input class="input100" type="password" name="pass" placeholder="Password" id="passField" required="" oninvalid="this.setCustomValidity('Please Enter Your Password')" oninput="this.setCustomValidity('')" onfocus="hideMessage()">
+						<span class="focus-input100" data-placeholder="&#xf191;"></span>
+					</div>
+
+					<div class="inform-user">
+						<p></p>
+					</div>
+
+					<div class="contact100-form-checkbox">
+						<input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+						<label class="label-checkbox100" for="ckb1">
+							Remember me
+						</label>
+					</div>
+
+					<div class="container-login100-form-btn">
+						<button class="login100-form-btn" type="submit">
+							Login
+						</button>
+					</div>
+
+					<div class="text-center p-t-90">
+						<a class="txt1" href="#">
+							Forgot Password?
+						</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	<div id="dropDownSelect1"></div>
+	<script>
+		function hideMessage(){
+			const inform = document.querySelector(".inform-user");
+			var par = inform.firstElementChild;
+			par.style.display = "none";
+		}
+	</script>
+	<script src="./Assets/js/storage.js"></script>
+	<script src="./Assets/js/loginAuthentication.js"></script>
+</body>
+</html>
