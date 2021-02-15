@@ -44,9 +44,9 @@ function validateInputs(e) {
 
         if (validEntry) {
             // Give access based on the accessType Attribute
-            // if (user.accessType == "User"){
-            //     location = "Untracked.html";
-            // }
+            if (user.accessType == "User"){
+                window.location.href = "End_user_UI/cases.html?user="+user.userName+"";
+            }
         }
 
 

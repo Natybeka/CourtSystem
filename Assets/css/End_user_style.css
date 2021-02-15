@@ -10,6 +10,18 @@ nav{
     border-radius: 2rem;
 }
 
+.nav-link{
+    line-height: 1.5rem;
+}
+
+.nav-link:hover{
+    text-decoration: underline;
+}
+.active {
+    color: black;
+    font-weight: bolder;
+}
+
 .card{
     background-color: rgba(105, 114, 113, 0.9);
     color: rgb(219, 243, 237);
@@ -42,3 +54,8 @@ nav{
 footer{
     margin-top: 6rem;
 }
+
+
+
+
+
