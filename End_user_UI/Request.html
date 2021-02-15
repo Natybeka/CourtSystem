@@ -23,7 +23,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item ">
-                <a class="nav-link" href="./cases.html">MY CASES</a>
+                <a class="nav-link" href="./user_cases.html">MY CASES</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="./Request.html">FILE REQUEST</a>
@@ -43,7 +43,32 @@
           <h5 class="card-title">File a new request</h5>
           <p class="card-text">After sending this request your case will be reviewed and if found 
             sufficient it will be approved and a court date will be assigned,Thank you!</p>
-              <div class="row">
+            <div class="row">
+              <div class="col-md-2 pl-12">
+                  <div class="form-group">
+                      <label for="dname">Defendant's Name:</label>
+                  </div>   
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <input type="text" id="dname" placeholder="Full name" class="form-control" required>
+                </div>
+              </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2 pl-12">
+                <div class="form-group">
+                    <label for="pname">Plaintiff's Name:</label>
+                </div>   
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <input type="text" id="pname" placeholder="Full name" class="form-control" required>
+              </div>
+            </div>
+        </div>
+            
+            <div class="row">
                 <div class="col-md-2 pl-12">
                     <div class="form-group">
                         <label for="case_type">Case Type:</label>
@@ -88,5 +113,6 @@
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="../Assets/js/bootstrap.min.js" ></script>
+    <script src="../Assets/js/storage.js" ></script>
 </body>
 </html>
