@@ -27,12 +27,11 @@ function User(userName, fullName, accessType, password){
     and finally methods
     changing courtLevel and status
 */
-function Case(caseID, status, plaintiff, defendant, courtLevel, judge, caseOpened, description) {
+function Case(caseID, status, plaintiff, defendant, judge, caseOpened, description) {
     this.caseID = caseID;
     this.status = status;
     this.plaintiff = plaintiff;
     this.defendant = defendant;
-    this.courtLevel = courtLevel;
     this.caseOpened = caseOpened;
     this.description = description;
     this.judge = judge;
@@ -57,19 +56,30 @@ function Case(caseID, status, plaintiff, defendant, courtLevel, judge, caseOpene
 }
 
 // Request Objects to store handle the request 
-function Request(requestID, requestType, handled, userRequested) {
-    this.requestID = requestID;
+function Request(requestType, userRequested, caseInfo) {
     this.requestType = requestType;
     this.requested = userRequested;
-    this.handled = handled;
+    this.caseInfo = caseInfo;
 }
 
 // Jusdge Objects
-function Judge(cases, userName, fullName) {
+function Judge(cases, userName, fullName, accessType, password) {
+
+    User.call(this, userName, fullName, accessType, password);
+    // Judge hanldes the cases
     this.cases = cases;
-    this.userName = userName;
-    this.fullName = fullName;
 }
+//Judge is a user prototype
+Judge.prototype = Object.create(User.prototype);
+Judge.prototype.constructor = Judge;
+
+function Clerk(requests, userName, fullName, accessType, password) {
+    User.call(this, userName, fullName, accessType, password);
+
+    this.requests = requests;
+}
+
+
 
 //Global Variable to hold the database
 let Court;
@@ -86,55 +96,70 @@ document.addEventListener('DOMContentLoaded', () => {
         cases.createIndex('by_judge', 'judge');
         cases.createIndex('by_status', 'status');
         cases.createIndex('by_nextDate', 'nextCourtDate');
-        cases.createIndex('by_level', 'courtLevel');
+        cases.createIndex('by_fullname', 'fullName')
         cases.createIndex('by_plaintiff', 'plaintiff');
         cases.createIndex('by_defendant', 'defendant');
         
 
-        let users = db.createObjectStore('Users',{keyPath : 'userName'});
-        users.createIndex('by_password', 'password');
+        let users = db.createObjectStore('Users',{keyPath : 'userName', unique:true});
         users.createIndex('by_access', 'accessType');
-        
-
-        let userRequests = db.createObjectStore('Request');
-        userRequests.createIndex('by_requestID', 'requestID');
-        userRequests.createIndex('by_status', 'handled'); 
-        userRequests.createIndex('by_request_type', 'requestType'); 
       
-        let judges = db.createObjectStore('Judges',{keyPath : 'userName'});
+        let judges = db.createObjectStore('Judges',{keyPath : 'userName', unique:true});
+
+        let clerk = db.createObjectStore('Clerks', {keyPath : 'userName', unique:true});
 
     };
 
     //Assign to global variable if database already exists
     db.onsuccess = function(e) {
         Court = e.target.result;
-        console.log("Database is ready"); 
+        // console.log("Database is ready"); 
         let userObject = Court.transaction("Users", "readwrite").objectStore("Users");
         userObject.add(new User("uniqueUser", "Natnael Bekabtu", "User", "zembel26"));
-        console.log("Added first User");
+        // console.log("Added first User");
         let userObject2 = Court.transaction("Users", "readwrite").objectStore("Users");
         userObject2.add(new User("uniqueUser2", "Natnael Bekabtu", "User", "zembel27"));
-        console.log("Added seconde User");
+        // console.log("Added seconde User");
+
+        let Clerk1 = Court.transaction("Clerks", "readwrite").objectStore("Clerks");
+        Clerk1.add(new Clerk([], "Clerk1", "First Clerk", "Clerk", "zembel27"));
+        // console.log("Added seconde User");
+
+        let Clerk2 = Court.transaction("Clerks", "readwrite").objectStore("Clerks");
+        Clerk2.add(new Clerk([], "Clerk2", "Second Clerk", "Clerk", "zembel27"));
+
+        // let userObject4 = Court.transaction("Judges", "readwrite").objectStore("Judges");
+        // userObject4.add(new User("Judge1", "Natnael Bekabtu", "Judge", "zembel27"));
+        // console.log("Added seconde User");
+
+        
+        
 
         let caseObject = Court.transaction("Cases","readwrite").objectStore("Cases");
-        caseObject.add(new Case("aw1","active","uniqueUser","uniqueUser2","firstInstance","Yemame234",new Date(),"This is the description for the first case"));
+        caseObject.add(new Case("aw1","active","uniqueUser","uniqueUser2","Yemame234",new Date(),"Mr M was viciously attacked by unknown assailants following a night out with friends. He suffered a fracture of the orbital bone cavity of his right eye requiring two operations and leaving him with permanent scarring. Having been refused Criminal Injuries Compensation by the CICA the Student Law Office successfully helped Mr M appeal this decision. We represented Mr M at his hearing he was awarded £2,200 in compensation as a result."));
 
         let caseObject2 = Court.transaction("Cases","readwrite").objectStore("Cases");
-        caseObject2.add(new Case("aw2","active","uniqueUser","uniqueUser2","firstInstance","Yemame234",new Date(),"This is the description for the another case"));
+        caseObject2.add(new Case("aw2","active","uniqueUser","uniqueUser2","Yemame234",new Date(),"Mr M was viciously attacked by unknown assailants following a night out with friends. He suffered a fracture of the orbital bone cavity of his right eye requiring two operations and leaving him with permanent scarring. Having been refused Criminal Injuries Compensation by the CICA the Student Law Office successfully helped Mr M appeal this decision. We represented Mr M at his hearing he was awarded £2,200 in compensation as a result."));
 
         let caseObject3 = Court.transaction("Cases","readwrite").objectStore("Cases");
-        caseObject3.add(new Case("aw3","active","uniqueUser2","uniqueUser1","firstInstance","erwqwe34",new Date(),"This is the description for the third case"));
+        caseObject3.add(new Case("aw3","active","uniqueUser2","uniqueUser1","erwqwe34",new Date(),"Mr M was viciously attacked by unknown assailants following a night out with friends. He suffered a fracture of the orbital bone cavity of his right eye requiring two operations and leaving him with permanent scarring. Having been refused Criminal Injuries Compensation by the CICA the Student Law Office successfully helped Mr M appeal this decision. We represented Mr M at his hearing he was awarded £2,200 in compensation as a result."));
 
         let caseObject4 = Court.transaction("Cases","readwrite").objectStore("Cases");
-        caseObject4.add(new Case("aw4","active","uniqueUser","uniqueUser2","firstInstance","Yemame234",new Date(),"This is the description for the first case"));
+        caseObject4.add(new Case("aw4","active","uniqueUser","uniqueUser2","Yemame234",new Date(),"Mr M was viciously attacked by unknown assailants following a night out with friends. He suffered a fracture of the orbital bone cavity of his right eye requiring two operations and leaving him with permanent scarring. Having been refused Criminal Injuries Compensation by the CICA the Student Law Office successfully helped Mr M appeal this decision. We represented Mr M at his hearing he was awarded £2,200 in compensation as a result."));
 
         let caseObject5 = Court.transaction("Cases","readwrite").objectStore("Cases");
-        caseObject5.add(new Case("aw5","closed","uniqueUser2","uniqueUser","firstInstance","Yemame234",new Date(),"This is the description for the first case"));
+        caseObject5.add(new Case("aw5","closed","uniqueUser2","uniqueUser","Yemame234",new Date(),"Mr M was viciously attacked by unknown assailants following a night out with friends. He suffered a fracture of the orbital bone cavity of his right eye requiring two operations and leaving him with permanent scarring. Having been refused Criminal Injuries Compensation by the CICA the Student Law Office successfully helped Mr M appeal this decision. We represented Mr M at his hearing he was awarded £2,200 in compensation as a result."));
+
+        // Close this instance after data population
+        console.log("Database populated and closed")
+        Court.close();
     };
 
     db.onerror = function() {
-        // console.log("Error opening database");
+        console.log("Error opening database");
     }
     
 });
 
+
+export {User, Case, Request, Judge, Clerk}
