@@ -1,3 +1,0 @@
-function clearSession(){
-    sessionStorage.clear();
-}

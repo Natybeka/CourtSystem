@@ -10,56 +10,55 @@ function validateInputs(e) {
     e.preventDefault()
     var username = user.value;
     var password = pass.value;
-    var validEntry = false;
-    // if (username == ''){
-    //     // console.log("username empty detected");
-    //     user.style.borderColor = "red";
-    //     return;
-    // }
-    // if(password == '') {
-    //     console.log("password empty detected")
-    //     pass.style.borderColor = "red";
-    //     return;
-    // }
-
+ 
     // open the db to match the username with the password
-    
-    let userObjects = Court.transaction("Users").objectStore("Users");
-    //search using the username key
-    let request = userObjects.openCursor();
+    let Court;
+    let requestDBOpen = indexedDB.open("CourtSystem", 1);
+    requestDBOpen.onsuccess = function(e) {
+        Court = e.target.result;
+        console.log("Database instance opened!");
+        let transaction = Court.transaction(["Users", "Clerks", "Judges"])
+        let userRequest = transaction.objectStore("Users").getAll();
+        let clerkRequest = transaction.objectStore("Clerks").getAll();
+        let judgeRequest = transaction.objectStore("Judges").getAll();
 
-    request.onsuccess = function(event){
-        let cursor = event.target.result;
-        var user;
-        if (cursor && !validEntry){
-            user = cursor.value;
-            // Password crosschecked with username
-            if (username == user.userName && password == user.password){
-                validEntry = true;
+        userRequest.onsuccess = function(e) {
+            if(result = searchArray(userRequest.result, username, password)){
+                window.location.href = "End_user_UI/cases.html?user="+username+"&access="+result; 
             }
-            else {
-                cursor.continue();    
-            }
+            displayError();
         }
 
-        if (validEntry) {
-            // Give access based on the accessType Attribute
-            if (user.accessType == "User"){
-                window.location.href = "End_user_UI/cases.html?user="+user.userName+"";
+        clerkRequest.onsuccess = function(e) {
+            var result;
+            if (result = searchArray(clerkRequest.result, username, password)){
+                window.location.href = "Clerk_UI/Pending.html?user="+username+"&access="+result;
             }
+            displayError();
         }
 
-
-        // else login failed inform the user to check the inputs
-        else {
-            inform.style.width = "100%";
-            let par = inform.firstElementChild
-            par.style.color = "red"
-            par.style.display = "block"
-            par.innerHTML = "Unable to log in to system, please check your inputs!";
-        } 
-        console.log(validEntry)
-        // open the relevant document by checking the userType 
+        // judgeRequest
+                 
     }
 
+}
+
+
+function searchArray(objectArr, username, password) {
+    let accessType;
+    for (let i = 0; i < objectArr.length;i++) {
+        if (objectArr[i].userName == username && objectArr[i].password == password) {
+            accessType = objectArr[i].accessType;
+            break;
+        }
+    }
+    return accessType;
+}
+
+function displayError() {
+    inform.style.width = "100%";
+    let par = inform.firstElementChild
+    par.style.color = "red"
+    par.style.display = "block"
+    par.innerHTML = "Unable to log in to system, please check your inputs!";
 }
