@@ -2,12 +2,15 @@
 const user = document.querySelector("#userField");
 const pass = document.querySelector("#passField");
 const inform = document.querySelector(".inform-user");
+
 //Login form
 const login = document.querySelector("#login-form");
+
 login.addEventListener('submit', validateInputs);
 
+
 function validateInputs(e) {
-    e.preventDefault()
+    e.preventDefault();
     var username = user.value;
     var password = pass.value;
  
@@ -16,7 +19,7 @@ function validateInputs(e) {
     let requestDBOpen = indexedDB.open("CourtSystem", 1);
     requestDBOpen.onsuccess = function(e) {
         Court = e.target.result;
-        console.log("Database instance opened!");
+        
         let transaction = Court.transaction(["Users", "Clerks", "Judges"])
         let userRequest = transaction.objectStore("Users").getAll();
         let clerkRequest = transaction.objectStore("Clerks").getAll();
@@ -24,17 +27,19 @@ function validateInputs(e) {
 
         userRequest.onsuccess = function(e) {
             if(result = searchArray(userRequest.result, username, password)){
+                Court.close();
                 window.location.href = "End_user_UI/cases.html?user="+username+"&access="+result; 
             }
-            displayError();
+            displayError("Unable to log in to system, please check your inputs!");
         }
 
         clerkRequest.onsuccess = function(e) {
             var result;
             if (result = searchArray(clerkRequest.result, username, password)){
+                Court.close();
                 window.location.href = "Clerk_UI/Pending.html?user="+username+"&access="+result;
             }
-            displayError();
+            displayError("Unable to log in to system, please check your inputs!");
         }
 
         // judgeRequest
@@ -42,6 +47,8 @@ function validateInputs(e) {
     }
 
 }
+
+
 
 
 function searchArray(objectArr, username, password) {
@@ -55,10 +62,13 @@ function searchArray(objectArr, username, password) {
     return accessType;
 }
 
-function displayError() {
+function displayError(message) {
     inform.style.width = "100%";
     let par = inform.firstElementChild
     par.style.color = "red"
     par.style.display = "block"
-    par.innerHTML = "Unable to log in to system, please check your inputs!";
+    par.innerHTML = message;
 }
+
+
+
