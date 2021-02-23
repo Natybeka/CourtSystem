@@ -16,6 +16,17 @@ document.addEventListener('DOMContentLoaded', () => {
         let indexed = store.index("by_judge")
 
         let j1 = indexed.getAll(userName);
+        j1.onsuccess = function(event){
+            let judgeCase = event.target.result;
+            for(let i = 0; i < judgeCase.length; i++){
+                let x , y;
+                if((judgeCase[i]).status === 'active'){
+                    y = 'disabled';
+                }else{
+                    x = 'disabled';
+                }
+            }
+        }
     }
 
     db.onerror = function() {
