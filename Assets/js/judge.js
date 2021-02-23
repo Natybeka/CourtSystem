@@ -10,7 +10,12 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     db.onsuccess = function(e) {
+        let jg = db.result;
+        let tx = jg.transaction("Cases","readwrite");
+        let store = tx.objectStore("Cases");
+        let indexed = store.index("by_judge")
 
+        let j1 = indexed.getAll(userName);
     }
 
     db.onerror = function() {
