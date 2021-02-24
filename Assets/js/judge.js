@@ -37,6 +37,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
                 document.getElementById('body').appendChild(div);
             }
+            var closeCaseButton, reopenCaseButton;
+            for(let i = 0; i < judgeCase.length; i++){
+                closeCaseButton = document.getElementById(`btnclose${i}`);
+                reopenCaseButton = document.getElementById(`btnreopen${i}`);
+                
+                adds(closeCaseButton, reopenCaseButton, i);
+            }
         }
     }
 
