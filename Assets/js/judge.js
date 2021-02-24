@@ -25,6 +25,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 }else{
                     x = 'disabled';
                 }
+                var div = document.createElement('div');
+                div.setAttribute('class', 'card container');
+                div.innerHTML = `
+                    <div class="card-body">
+                        <h5 class='card-title'>Case-${(judgeCase[i]).caseID}</h5>
+                        <p class='card-text'>${(judgeCase[i]).description}</p>
+                        <button class="btn btn-info btn-lg " id="btnclose${i}" ${x}>Close Case</button>
+                        <button class="btn btn-info btn-lg " id="btnreopen${i}" ${y}>Re-open Case</button>
+                    </div>
+                `;
+                document.getElementById('body').appendChild(div);
             }
         }
     }
