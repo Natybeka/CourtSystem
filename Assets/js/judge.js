@@ -58,6 +58,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
 
                 });
+                reopenCaseButton.addEventListener('click', () => {
+                    console.log(reopenCaseBtn.id + " clicked");
+                    closeCaseBtn.disabled = false;
+                    reopenCaseBtn.disabled = true;
+                    (judgeCase[ind]).status = 'active';
+                    let tx2 = jg.transaction("Cases","readwrite");
+                    let store2 = tx2.objectStore("Cases");
+                    var updateTitleRequest = store2.put(judgeCase[ind]);
+                    updateTitleRequest.onsuccess = function(e){
+                        console.log("The transaction that originated this request is " + updateTitleRequest.transaction);
+                    }
+                });
             }
         }
     }
