@@ -1,4 +1,7 @@
+import {encrypt, isUpperCase} from "./storage.js"
+
 //UI elements for the username and password
+
 const user = document.querySelector("#userField");
 const pass = document.querySelector("#passField");
 const inform = document.querySelector(".inform-user");
@@ -26,18 +29,19 @@ function validateInputs(e) {
         let judgeRequest = transaction.objectStore("Judges").getAll();
 
         userRequest.onsuccess = function(e) {
-            if(result = searchArray(userRequest.result, username, password)){
+            var result;
+            if(result = searchArray(userRequest.result, username, encrypt(password))){
                 Court.close();
-                window.location.href = "End_user_UI/cases.html?user="+username+"&access="+result; 
+                window.location.href = "./End_user_UI/cases.html?user="+username+"&access="+result; 
             }
             displayError("Unable to log in to system, please check your inputs!");
         }
 
         clerkRequest.onsuccess = function(e) {
             var result;
-            if (result = searchArray(clerkRequest.result, username, password)){
+            if (result = searchArray(clerkRequest.result, username, encrypt(password))){
                 Court.close();
-                window.location.href = "Clerk_UI/Pending.html?user="+username+"&access="+result;
+                window.location.href = "./Clerk_UI/Pending.html?user="+username+"&access="+result;
             }
             displayError("Unable to log in to system, please check your inputs!");
         }

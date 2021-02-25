@@ -115,18 +115,18 @@ document.addEventListener('DOMContentLoaded', () => {
         Court = e.target.result;
         // console.log("Database is ready"); 
         let userObject = Court.transaction("Users", "readwrite").objectStore("Users");
-        userObject.add(new User("uniqueUser", "Natnael Bekabtu", "User", "zembel26"));
+        userObject.add(new User("uniqueUser", "Natnael Bekabtu", "User", encrypt("zembel26")));
         // console.log("Added first User");
         let userObject2 = Court.transaction("Users", "readwrite").objectStore("Users");
-        userObject2.add(new User("uniqueUser2", "Natnael Bekabtu", "User", "zembel27"));
+        userObject2.add(new User("uniqueUser2", "Natnael Bekabtu", "User", encrypt("zembel27")));
         // console.log("Added seconde User");
 
         let Clerk1 = Court.transaction("Clerks", "readwrite").objectStore("Clerks");
-        Clerk1.add(new Clerk([], "Clerk1", "First Clerk", "Clerk", "zembel27"));
+        Clerk1.add(new Clerk([], "Clerk1", "First Clerk", "Clerk", encrypt("zembel27")));
         // console.log("Added seconde User");
 
         let Clerk2 = Court.transaction("Clerks", "readwrite").objectStore("Clerks");
-        Clerk2.add(new Clerk([], "Clerk2", "Second Clerk", "Clerk", "zembel27"));
+        Clerk2.add(new Clerk([], "Clerk2", "Second Clerk", "Clerk", encrypt("zembel27")));
 
         // let userObject4 = Court.transaction("Judges", "readwrite").objectStore("Judges");
         // userObject4.add(new User("Judge1", "Natnael Bekabtu", "Judge", "zembel27"));
@@ -161,5 +161,30 @@ document.addEventListener('DOMContentLoaded', () => {
     
 });
 
+function encrypt(str) {
+    let output = '';
+    const key = 5; // Cipher key
+    for (let i = 0; i < str.length; i++) {
+        // check whether the charactre is a number
+        if (isNaN(str.charAt(i))) {
+            
+            if (isUpperCase(str.charAt(i))) {
+                output += String.fromCharCode((str.charCodeAt(i) + 5 - 65) % 26 + 65);
+            }
 
-export {User, Case, Request, Judge, Clerk}
+            else {
+                output += String.fromCharCode((str.charCodeAt(i) + 5 - 97) % 26 + 97);
+            }
+        }
+        else{
+            output += str.charAt(i);
+        }
+         
+    }
+    return output;
+}
+
+function isUpperCase(char){return char === char.toUpperCase();}
+
+
+export {User, Case, Request, Judge, Clerk, encrypt, isUpperCase}
