@@ -1,4 +1,4 @@
-import {User} from "./storage.js";
+import {User, encrypt, isUpperCase} from "./storage.js";
 const user = document.querySelector("#userField");
 const pass = document.querySelector("#passField");
 const fullname = document.querySelector('#fnameField');
