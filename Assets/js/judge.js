@@ -44,6 +44,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 adds(closeCaseButton, reopenCaseButton, i);
             }
+            function adds(closeCaseBtn, reopenCaseBtn, ind){
+                closeCaseBtn.addEventListener('click', () => {
+                    console.log(closeCaseBtn.id + " clicked");
+                    closeCaseBtn.disabled = true;
+                    reopenCaseBtn.disabled = false;
+                    (judgeCase[ind]).status = 'closed';
+                    let tx2 = jg.transaction("Cases","readwrite");
+                    let store2 = tx2.objectStore("Cases");
+                    var updateTitleRequest = store2.put(judgeCase[ind]);
+                    updateTitleRequest.onsuccess = function(e){
+                        console.log("The transaction that originated this request is " + updateTitleRequest.transaction);
+                    }
+
+                });
+            }
         }
     }
 
