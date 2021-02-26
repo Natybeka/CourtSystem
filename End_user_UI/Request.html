@@ -57,16 +57,27 @@
                 </div>
               </div>
           </div>
-           
+          <div class="row">
+            <div class="col-md-2 pl-12">
+                <div class="form-group">
+                    <label for="pname">Plaintiff's Name:</label>
+                </div>   
+            </div>
+            <div class="col-md-5">
+              <div class="form-group">
+                <input type="text" id="pname" placeholder="Full name" class="form-control" required>
+              </div>
+            </div>
+        </div>
             <div class="row">
                 <div class="col-md-2 pl-12">
                     <div class="form-group">
-                        <label for="case_type">Case Type:</label>
+                        <label for="case-type-selector">Case Type:</label>
                     </div>   
                 </div>
                 <div class="col-md-5">
                   <div class="form-group">
-                    <select name="" id="Country" class="form-control" placeholder="Case type" required>
+                    <select name="" id="case-type-selector" class="form-control" placeholder="Case type" required>
                         <!-- <option value="" selected class="default">Case type</option> -->
                         <option value="" disabled selected>Case type</option>
                         <option value="civil">Civil Cases</option>
@@ -79,20 +90,20 @@
             <div class="row">
               <div class="col-md-2 pl-12">
                   <div class="form-group">
-                      <label for="dname">Charge:</label>
+                      <label for="charge">Charge:</label>
                   </div>   
               </div>
               <div class="col-md-5">
                 <div class="form-group">
-                  <input type="text" id="dname" placeholder="Charges" class="form-control" required>
+                  <input type="text" id="charge" placeholder="Charges" class="form-control" required>
                 </div>
               </div>
           </div>
             <div class="row">
                 <div class="col-md-7">
                     <div class="form-group">
-                        <label for="txarea">Case description</label>
-                        <textarea class="form-control" id="txarea" rows="4"></textarea>
+                        <label for="description">Case description</label>
+                        <textarea class="form-control" id="description" rows="4"></textarea>
                       </div>
                 </div>
             </div>
