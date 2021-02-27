@@ -1,4 +1,7 @@
 const fileButton = document.querySelector("#file");
+const form = document.querySelector('#request-form');
+
+
 fileButton.addEventListener('click', addRequest);
 
 let userName = sessionStorage.getItem("user");
@@ -18,5 +21,5 @@ function addRequest(e) {
     }
 
     let caseRequest = new Request("open-case", userName, [defendantName, plaintiffName, caseType, charge, description]);
-    console.log(caseRequest)
+    form.reset()
 }
