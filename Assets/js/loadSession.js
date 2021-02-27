@@ -109,9 +109,11 @@ function loadUserData(){
 }
 
 function loadClerkData(){
-    
+    const container = document.querySelector('#request-container');
+    let i=6
+    displayRequest()
 
-    
+    function displayRequest() {
     let db = indexedDB.open("CourtSystem", 1);
     db.onsuccess= function(e){
     Court = e.target.result;
@@ -140,10 +142,10 @@ function loadClerkData(){
                 </div>
                 </div> `; 
         }
-        console.log(display)
+        container.innerHTML += display;
     }
 
-
+    }
 
     }
     
