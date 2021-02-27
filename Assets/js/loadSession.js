@@ -22,7 +22,7 @@ console.log(accessType);
 
 switch(accessType){
     case 'User': loadUserData();break;
-    case 'Clerk': console.log("Code here");break; 
+    case 'Clerk':loadClerkData();break; 
 }
 
 
@@ -105,6 +105,47 @@ function loadUserData(){
             }
         }
     } 
+    
+}
+
+function loadClerkData(){
+    
+
+    
+    let db = indexedDB.open("CourtSystem", 1);
+    db.onsuccess= function(e){
+    Court = e.target.result;
+    let objectStore = Court.transaction("Clerks").objectStore("Clerks");
+    var request = objectStore.get(userName);
+    
+    request.onsuccess= function(e){
+        var values=e.target.result;
+        let display=''
+
+        for (var i = 0, l = values.requests.length; i < l; i++) {
+            var obj = values.requests[i];
+            display += `
+                <div class="card" id="${i}">
+                <div class="card-body">
+                    <h5 class="card-title">Case${i+1}</h5>
+                    <p class="card-text">Request type: ${obj.requestType}</p>
+                    <p class="card-text">${obj.requested}</p>
+                    <p id="defendant_name" class="card-text">Defendant name: ${obj.caseInfo[0]}</p>
+                     <p id="Plaintiff_name" class="card-text">Plaintiff name: ${obj.caseInfo[1]}</p>
+                    <p class="card-text">Case Type: ${obj.caseInfo[2]}</p>
+                    <p class="card-text">Charge: ${obj.caseInfo[3]}</p>
+                    <p id="description" class="card-text">Description: ${obj.caseInfo[4]}</p>
+                    <a href="" class="accept-button btn btn-secondary">Accept</a>
+                    <a href="" class="decline-button btn btn-secondary">Decline</a>
+                </div>
+                </div> `; 
+        }
+        console.log(display)
+    }
+
+
+
+    }
     
 }
 
