@@ -17,6 +17,54 @@ nav{
 .nav-link:hover{
     text-decoration: underline;
 }
+.search-box{
+   position: relative;
+   width: 200px;
+   margin-top: 10px; 
+   transition: all 0.5s cubic-bezier(0.68, 0.55, 0.265,1.55 );
+}
+.search-box.active{
+    width: 350px;
+}
+.search-box input{
+    height: 100%;
+    width: 100%;
+    border: none;
+    outline: none;
+    background:white;
+    font-size: 15px;
+    border-radius: 50px;
+    padding: 10px 60px 10px 20px;
+    /* opacity: 0; */
+    transition: all 0.5s cubic-bezier(0.68, 0.55, 0.265,1.55 );
+
+}
+.search-box .search-btn{
+
+    height: 30px;
+    width: 30px;
+    color: white;
+    position: absolute;
+    top: 35%;
+    right: 15px;
+    transform: translateY(-50%);
+    background:gray;
+    line-height: 30px;
+    font-size: 15px;
+    text-align: center;
+    border-radius: 30px;
+    cursor: pointer;
+}
+.search-box .cancel-btn{
+    position: absolute;
+    top: 35%;
+    right: -5px;
+    transform: translateY(-50%);
+    color: white;
+   
+    font-size: 20px;
+    cursor: pointer;
+}
 .active {
     color: black;
     font-weight: bolder;
