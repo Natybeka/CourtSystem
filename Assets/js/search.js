@@ -1,36 +1,78 @@
-// const searchBtn = document.querySelector(".search-btn");
+// const searchCaseBtn = document.querySelector(".searchCase-btn");
 // const cancelBtn = document.querySelector(".cancel-btn");
-// const searchBox = document.querySelector(".search-box");
-// const searchInput = document.querySelector("input");
+// const searchCaseBox = document.querySelector(".searchCase-box");
+// const searchCaseInput = document.querySelector("input");
 
-// searchBtn.onClick= () =>{
-//     searchBox.classList.add("active");
-//     searchInput.classList.add("active");
+// searchCaseBtn.onClick= () =>{
+//     searchCaseBox.classList.add("active");
+//     searchCaseInput.classList.add("active");
 // }
-const searchBox = document.querySelector(".search-box");
-const searchBtn = document.querySelector(".search-icon");
+const searchCaseBox = document.querySelector(".searchCase-box");
+const searchCaseBtn = document.querySelector(".searchCase-icon");
 const cancelBtn = document.querySelector(".cancel-icon");
-const searchInput = document.querySelector("input");
-const searchData = document.querySelector(".search-data");
-searchBtn.onclick =()=>{
-  searchBox.classList.add("active");
-  searchBtn.classList.add("active");
-  searchInput.classList.add("active");
+const searchCaseInput = document.querySelector("input");
+const searchCaseData = document.querySelector(".searchCase-data");
+searchCaseBtn.onclick =()=>{
+  searchCaseBox.classList.add("active");
+  searchCaseBtn.classList.add("active");
+  searchCaseInput.classList.add("active");
   cancelBtn.classList.add("active");
-  searchInput.focus();
-  if(searchInput.value != ""){
-    var values = searchInput.value;
-    searchData.classList.remove("active");
-    searchData.innerHTML = "You just typed " + "<span style='font-weight: 500;'>" + values + "</span>";
+  searchCaseInput.focus();
+  if(searchCaseInput.value != ""){
+    var values = searchCaseInput.value;
+    searchCaseData.classList.remove("active");
+    searchCaseData.innerHTML = "You just typed " + "<span style='font-weight: 500;'>" + values + "</span>";
   }else{
-    searchData.textContent = "";
+    searchCaseData.textContent = "";
   }
 }
 cancelBtn.onclick =()=>{
-  searchBox.classList.remove("active");
-  searchBtn.classList.remove("active");
-  searchInput.classList.remove("active");
+  searchCaseBox.classList.remove("active");
+  searchCaseBtn.classList.remove("active");
+  searchCaseInput.classList.remove("active");
   cancelBtn.classList.remove("active");
-  searchData.classList.toggle("active");
-  searchInput.value = "";
+  searchCaseData.classList.toggle("active");
+  searchCaseInput.value = "";
 }
+// const searchCase = window.indexedDB.open('database', 1);
+// searchCase.onsuccess = () => {
+//     const db = searchCase.result;
+//     const transaction = db.transaction(['invoices'], 'readonly');
+//     const invoiceStore = transaction.objectStore('invoices');
+//     const getCursorsearchCase = invoiceStore.openCursor();
+//     getCursorsearchCase.onsuccess = e => {
+//          const cursor = e.target.result;
+//         if (cursor) {
+//             console.log(cursor.value);
+//             cursor.continue();
+//         } else {
+//             console.log('Exhausted all documents');
+//         }
+//     }
+//     }
+function getByCase(e) {
+	e.preventDefault();
+	var by_caseno = $("#by_caseno").val();
+
+	var transaction = db.transaction(["Cases"], "readonly");
+	var objectStore = transaction.objectStore("Cases");
+	var index = objectStore.index("by_casenos");
+		
+	var s = "";
+
+	var rangeTest = IDBKeyRange.only(by_caseno);
+	index.openCursor(rangeTest).onsuccess = function(e) {
+		var cursor = e.target.result;
+		if (cursor) {
+			s += "<h2>Key "+cursor.key+"</h2><p>";
+			for(var field in cursor.value) {
+				s+= field+"="+cursor.value[field]+"<br/>";
+			}
+			s+="</p>";
+			cursor.continue();
+		}
+		$("#searchresults").html(s);
+	}
+
+}
+
