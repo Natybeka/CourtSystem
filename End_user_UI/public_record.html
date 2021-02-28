@@ -13,38 +13,50 @@
 
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
-    <a class="navbar-brand" href="#">
-        <i class="fa fa-balance-scale fa-lg"></i>
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-  
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item ">
-            <a class="nav-link" href="./cases.html">MY CASES</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="./Request.html">FILE REQUEST</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="#">PUBLIC RECORDS</a>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+      <a class="navbar-brand" href="#">
+          <i class="fa fa-balance-scale fa-lg"></i>
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item ">
+              <a class="nav-link" href="./cases.html">MY CASES</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="../index.html" onfocus="clearSession()">LOG OUT</a>
+              <a class="nav-link" href="./Request.html">FILE REQUEST</a>
             </li>
-      </ul>
-      <!-- <div class="search-box">
-        <input type="text" placeholder="Search Case...">
-        <div class="search-btn">
-          <i class="fa fa-search"></i>
-        </div>
-        <div class="cancel-btn">
-          <i class="fa fa-times"></i>
-        </div>
-      </div> -->
+            <li class="nav-item">
+                <a class="nav-link" href="#">PUBLIC RECORDS</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="../index.html" onfocus="clearSession()">LOG OUT</a>
+              </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <input id="searchInput" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+          <button id="searchBtn" class="btn btn-outline my-2 my-sm-0" type="submit">Search</button>
+        </form>
+        <ul class="navbar-nav nav-item">
+            <li>
+              <a class="nav-link dropdown-toggle" href="" id="searchCrit" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  BY
+                </a>
+                <div class="dropdown-menu" aria-labelledby="searchCrit">
+                  <a class="dropdown-item" href="#">by case number</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#">by case type</a>
+                </div>
+            </li>
+        </ul>
+        
+      </div>
+    </nav>
+      
       <!-- <form class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline my-2 my-sm-0" type="submit">Search</button>
@@ -60,8 +72,8 @@
                 <a class="dropdown-item" href="#">by case type</a>
               </div>
           </li>
-      </ul> -->
-      <div class="search-box">
+      </ul>
+      <!-- <div class="search-box">
         <input type="text" placeholder="Search Case..">
         <div class="search-icon">
           <i class="fa fa-search"></i>
@@ -73,8 +85,8 @@
   </div>
   </div>
       
-    </div>
-  </nav>
+    </div> -->
+  
     
   <div class="card container">
     <div class="card-body">
