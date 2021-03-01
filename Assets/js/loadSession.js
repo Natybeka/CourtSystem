@@ -148,7 +148,51 @@ function loadClerkData(){
     }
 
     }
-    
+
+    container.addEventListener('click',listen)
+    function listen(e){
+        if (e.target.classList.contains('accept-button')){
+            acceptRequest(e)    
+        } 
+    }
+
+    function acceptRequest(e){
+        e.preventDefault()
+        e.target.parentElement.parentElement.innerHTML+=`
+    <div class="row">
+                <div class="col-md-2 pl-12">
+                    <div class="form-group">
+                        <label for="cDate">Set court date:</label>
+                    </div>   
+                </div>
+                <div class="col-md-5">
+                <div class="form-group">
+                    <input type="text" id="cDate" placeholder="court date" class="form-control" required>
+                </div>
+                </div>
+            </div>
+            
+            <div class="row">
+            <div class="col-md-2 pl-12">
+                <div class="form-group">
+                    <label for="jname">Judge Name:</label>
+                </div>   
+            </div>
+            <div class="col-md-5">
+            <div class="form-group">
+                <input type="text" id="jname" placeholder="Full name" class="form-control" required>
+            </div>
+            </div>
+        </div>
+        <div class="row">
+        <div class="col-md-4 pl-auto">
+            <a href="#" class="add_cases btn btn-primary">Add case</a>  
+        </div>
+        </div>
+
+            `
+    }
+
 }
 
 function clearSession(){
