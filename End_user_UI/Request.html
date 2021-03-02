@@ -45,6 +45,7 @@
           <p class="card-text">After sending this request your case will be reviewed and if found 
             sufficient it will be approved and a court date will be assigned,Thank you!</p>
             <div class="container center">
+              <form id="request-form">
             <div class="row">
               <div class="col-md-2 pl-12">
                   <div class="form-group">
@@ -107,6 +108,7 @@
                       </div>
                 </div>
             </div>
+            </form>
             <div class="row">
                 <div class="col-md-12">
                     <button class="btn btn-info btn-lg submit" id="file">File Case</button>
@@ -115,7 +117,7 @@
         </div>
       </div>
     </div>
-      <footer class="bg-light sticky-bottom ">
+      <footer class="bg-light sticky-bottom fixed-bottom">
         <div class="row px-4 fo-row">
           <div class="copy_right">
             <p>@2021. All rights reserved</p>
@@ -126,7 +128,7 @@
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="../Assets/js/bootstrap.min.js" ></script>
-    <script src="../Assets/js/storage.js" ></script>
-    <script src="../Assets/js/fileRequest.js"></script>
+    <script type="module" src="../Assets/js/storage.js" ></script>
+    <script type="module" src="../Assets/js/fileRequest.js"></script>
 </body>
 </html>
