@@ -1,7 +1,11 @@
+import {Case} from "./storage.js"
+
 // extract user key from url resource key to access database
 const url = new URLSearchParams(window.location.search);
 let userName = sessionStorage.getItem('user');
 let accessType = sessionStorage.getItem('access');
+
+let Court;
 
 if (userName == null && accessType == null) {
   userName = url.get("user");
@@ -107,10 +111,9 @@ function loadUserData(){
     } 
     
 }
-
+let i=6
 function loadClerkData(){
     const container = document.querySelector('#request-container');
-    let i=6
     displayRequest()
 
     function displayRequest() {
@@ -124,12 +127,12 @@ function loadClerkData(){
         var values=e.target.result;
         let display=''
 
-        for (var i = 0, l = values.requests.length; i < l; i++) {
-            var obj = values.requests[i];
+        for (var j = 0, l = values.requests.length; j < l; j++) {
+            var obj = values.requests[j];
             display += `
-                <div class="card" id="${i}">
+                <div class="card" id="${j}">
                 <div class="card-body">
-                    <h5 class="card-title">Case${i+1}</h5>
+                    <h5 class="card-title">Case ${j+1}</h5>
                     <p class="card-text">Request type: ${obj.requestType}</p>
                     <p class="card-text">${obj.requested}</p>
                     <p id="defendant_name" class="card-text">Defendant name: ${obj.caseInfo[0]}</p>
@@ -142,7 +145,7 @@ function loadClerkData(){
                 </div>
                 </div> `; 
         }
-        container.innerHTML += display;
+        container.innerHTML = display;
     }
 
     }
@@ -159,7 +162,7 @@ function loadClerkData(){
     function acceptRequest(e){
         e.preventDefault()
         e.target.parentElement.parentElement.innerHTML+=`
-    <div class="row">
+        <div class="row">
                 <div class="col-md-2 pl-12">
                     <div class="form-group">
                         <label for="cDate">Set court date:</label>
@@ -191,7 +194,51 @@ function loadClerkData(){
         </div>
 
             `
+
+            const AddCase=document.querySelector('.add_cases');
+            const courtDate=document.querySelector('#cDate');
+            const judgeName=document.querySelector('#jname');
+        
+            AddCase.addEventListener('click',AddToCaseFile)
+        
+            function AddToCaseFile(e){
+                e.preventDefault()
+                i++
+                let index;
+                let requestObject = Court.transaction("Clerks","readwrite").objectStore("Clerks");
+                var request = requestObject.get(userName);
+                request.onsuccess= function(e){
+                var values=e.target.result;
+                var this_id=AddCase.parentElement.parentElement.parentElement.getAttribute('id') 
+                index=this_id       
+                var val=values.requests[index]
+                console.log(values)
+                console.log(index)
+                console.log(AddCase.parentElement.parentElement.parentElement)
+                console.log(val.caseInfo)
+                var caseID=`aw${i}`;
+                var status = 'active';
+                var plaintiff = val.caseInfo[1];            
+                var defendant = val.caseInfo[0]; 
+                var judge = judgeName.value;
+                var caseOpened = new Date();
+                var description = `${val.caseInfo[2]}:${val.caseInfo[3]}\n ${val.caseInfo[4]}` ;
+                var nextCourtDate =courtDate.value;
+                let caseObject = Court.transaction("Cases","readwrite").objectStore("Cases");
+                var caseOpened = new Date();
+                let theCase=new Case(caseID,status,plaintiff,defendant,judge,caseOpened,description,nextCourtDate)
+                console.log(theCase)
+                caseObject.add(theCase);
+                values.requests.splice(index,1)
+                let requestObject2 = Court.transaction("Clerks","readwrite").objectStore("Clerks");
+                var request2 = requestObject.put(values);
+                request2.onsuccess= function(e){}
+                displayRequest()
+                }
+            }
     }
+
+    
 
 }
 
