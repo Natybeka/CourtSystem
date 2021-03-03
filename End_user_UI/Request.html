@@ -145,7 +145,7 @@
             placeholder.onsuccess =  function(e) {
               var user = placeholder.result;
               console.log(user);
-              var text = user.fullName;
+              var text = user.userName;
               var plaintiffName = document.getElementById("pname");
               plaintiffName.setAttribute('placeholder',text);
               plaintiffName.disabled = true;

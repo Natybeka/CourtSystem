@@ -47,12 +47,16 @@ function loadUserData(){
         let plaintiffIndex = userCases.index("by_plaintiff");
         let defendantIndex = userCases.index("by_defendant");
 
-        
+        let viewCode = 0;       
 
         let requestPlaintiff = plaintiffIndex.getAll(userName);
         let requestDefendant = defendantIndex.getAll(userName);
         requestPlaintiff.onsuccess = function() {
             if (requestPlaintiff.result != undefined) {
+                if (requestPlaintiff.result.length == 0) {
+                    viewCode++;
+                    return;
+                }
                 let activeCases = requestPlaintiff.result;
                 let userView = '';
                 userView += `<div class="row"> <div class="col-sm-12"><h1 style="color:#bda35c">Filed Cases</h1></div> </div>`
@@ -83,6 +87,13 @@ function loadUserData(){
 
         requestDefendant.onsuccess = function() {
             if (requestDefendant.result != undefined) {
+                if (requestDefendant.result.length == 0) {
+                    viewCode++;
+                    if (viewCode == 2) {
+                        document.getElementById("empty-case").style.display = 'block';
+                    }
+                    return;
+                }
                 let activeCases = requestDefendant.result;
                 let userView = '';
                 userView += `<div class="row"> <div class="col-sm-12"><h1 style="color:#b53d35">Filed Against Cases</h1></div> </div>`
@@ -112,7 +123,7 @@ function loadUserData(){
     } 
     
 }
-let i=5
+
 function loadClerkData(){
     const container = document.querySelector('#request-container');
 
@@ -179,7 +190,6 @@ function loadClerkData(){
         if (array.length == 1)
             return [];
         return array.slice(0, index).concat(array.slice(index + 1, array.length));
-    
     }
 
     function acceptRequest(e){
@@ -226,26 +236,27 @@ function loadClerkData(){
         
             function AddToCaseFile(e){
                 e.preventDefault()
-                i++
+                
                 let index;
                 let requestObject = Court.transaction("Clerks","readwrite").objectStore("Clerks");
                 var request = requestObject.get(userName);
                 request.onsuccess= function(e){
-                var values=e.target.result;
+                    var values=e.target.result;
                     var this_id=AddCase.parentElement.parentElement.parentElement.getAttribute('id') 
                     index=this_id       
                     var val=values.requests[index]
-                    var caseID=`aw${i}`;
+                   console.log(val);
+                    var caseID= Date.now();
                     var status = 'active';
-                    var plaintiff = val.caseInfo[1];            
+                    var plaintiff = val.requested;            
                     var defendant = val.caseInfo[0]; 
                     var judge = judgeName.value;
                     var caseOpened = new Date();
-                    var description = `${val.caseInfo[2]}:${val.caseInfo[3]}\n ${val.caseInfo[4]}` ;
-                    var nextCourtDate =courtDate.value;
+                    var description = `${val.caseInfo[4]}`;
+                    var nextCourtDate = courtDate.value;
                     let caseObject = Court.transaction("Cases","readwrite").objectStore("Cases");
-                    var caseOpened = new Date();
-                    let theCase=new Case(caseID,status,plaintiff,defendant,judge,caseOpened,description,nextCourtDate)
+                    let theCase=new Case(caseID,status,plaintiff,defendant,judge,caseOpened,description)
+                    
                     caseObject.add(theCase);
                     values.requests.splice(index,1)
                     let requestObject2 = Court.transaction("Clerks","readwrite").objectStore("Clerks");

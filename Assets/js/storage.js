@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
     db.onupgradeneeded = function(e){
         db = e.target.result;
         //Creating the Object store and the necessary indices for the db 
-        let cases = db.createObjectStore("Cases", {keyPath : 'caseID'});
+        let cases = db.createObjectStore("Cases", {keyPath : 'caseID', autoIncrement : true});
         cases.createIndex('by_caseno', 'caseID', {unique:true});
         cases.createIndex('by_judge', 'judge');
         cases.createIndex('by_status', 'status');
