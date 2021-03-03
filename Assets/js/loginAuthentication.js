@@ -46,7 +46,14 @@ function validateInputs(e) {
             displayError("Unable to log in to system, please check your inputs!");
         }
 
-        // judgeRequest
+        judgeRequest.onsuccess = function(e) {
+            var result;
+            if (result = searchArray(judgeRequest.result, username, encrypt(password))){
+                Court.close();
+                window.location.href = "./Judge_UI/judge.html?user="+username+"&access="+result;
+            }
+            displayError("Unable to log in to system, please check your inputs!");
+        }
                  
     }
 

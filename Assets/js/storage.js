@@ -128,6 +128,13 @@ document.addEventListener('DOMContentLoaded', () => {
         let Clerk2 = Court.transaction("Clerks", "readwrite").objectStore("Clerks");
         Clerk2.add(new Clerk([], "Clerk2", "Second Clerk", "Clerk", encrypt("zembel27")));
 
+        let Judge1 = Court.transaction("Judges", "readwrite").objectStore("Judges");
+        Judge1.add(new Judge([], "Yemame234", "First Judge", "Judge", encrypt("zembel27")));
+        // console.log("Added seconde User");
+
+        let Judge2 = Court.transaction("Judges", "readwrite").objectStore("Judges");
+        Judge2.add(new Judge([], "erwqwe34", "Second Judge", "Judge", encrypt("zembel27")));
+
         // let userObject4 = Court.transaction("Judges", "readwrite").objectStore("Judges");
         // userObject4.add(new User("Judge1", "Natnael Bekabtu", "Judge", "zembel27"));
         // console.log("Added seconde User");
