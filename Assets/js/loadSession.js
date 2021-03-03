@@ -115,42 +115,43 @@ function loadUserData(){
 let i=5
 function loadClerkData(){
     const container = document.querySelector('#request-container');
+
     displayRequest()
 
     function displayRequest() {
-    let db = indexedDB.open("CourtSystem", 1);
-    db.onsuccess= function(e){
-    Court = e.target.result;
-    let objectStore = Court.transaction("Clerks").objectStore("Clerks");
-    var request = objectStore.get(userName);
-    
-    request.onsuccess= function(e){
-        var values=e.target.result;
-        let display=''
-
-        for (var j = 0, l = values.requests.length; j < l; j++) {
-            var obj = values.requests[j];
-            display += `
-                <div class="card" id="${j}">
-                <div class="card-body">
-                    <h5 class="card-title">Case ${j+1}</h5>
-                    <p class="card-text">Request type: ${obj.requestType}</p>
-                    <p class="card-text">${obj.requested}</p>
-                    <p id="defendant_name" class="card-text">Defendant name: ${obj.caseInfo[0]}</p>
-                     <p id="Plaintiff_name" class="card-text">Plaintiff name: ${obj.caseInfo[1]}</p>
-                    <p class="card-text">Case Type: ${obj.caseInfo[2]}</p>
-                    <p class="card-text">Charge: ${obj.caseInfo[3]}</p>
-                    <p id="description" class="card-text">Description: ${obj.caseInfo[4]}</p>
-                    <a href="" class="accept-button btn btn-secondary">Accept</a>
-                    <a href="" class="decline-button btn btn-secondary">Decline</a>
-                </div>
-                </div> `; 
+        let db = indexedDB.open("CourtSystem", 1);
+        db.onsuccess= function(e){
+            Court = e.target.result;
+            let objectStore = Court.transaction("Clerks").objectStore("Clerks");
+            var request = objectStore.get(userName);
+            
+            request.onsuccess= function(e){
+                var values=e.target.result;
+                let display=''
+                if (values.requests.length == 0) {
+                    document.getElementById('empty-case').style.display = "block";
+                }
+                for (var j = 0, l = values.requests.length; j < l; j++) {
+                    var obj = values.requests[j];
+                    display += `
+                        <div class="card" id="${j}">
+                        <div class="card-body">
+                            <h5 class="card-title">Case ${j+1}</h5>
+                            <p class="card-text">Request type : ${obj.requestType}</p>
+                            <p class="card-text">User Requested : ${obj.requested}</p>
+                            <p id="defendant_name" class="card-text">Defendant name : ${obj.caseInfo[0]}</p>
+                            <p id="Plaintiff_name" class="card-text">Plaintiff name : ${obj.caseInfo[1]}</p>
+                            <p class="card-text">Case Type : ${obj.caseInfo[2]}</p>
+                            <p class="card-text">Charge : ${obj.caseInfo[3]}</p>
+                            <p id="description" class="card-text">Description : ${obj.caseInfo[4]}</p>
+                            <Button href="" class="accept-button btn btn-secondary">Accept</Button>
+                            <Button href="" class="decline-button btn btn-secondary">Decline</Button>
+                        </div>
+                        </div> `; 
+                }
+                container.innerHTML = display;
+            }
         }
-        container.innerHTML = display;
-    }
-
-    }
-
     }
 
     container.addEventListener('click',listen)
@@ -159,20 +160,21 @@ function loadClerkData(){
             acceptRequest(e)    
         }
         else if(e.target.classList.contains('decline-button')){
-            console.log("Are you here?");
             let requests = Court.transaction("Clerks","readwrite").objectStore("Clerks");
-            requests.get(userName);
-            requests.onsuccess = function(){
-                var clerk = requests.result;
+            let newRequest = requests.get(userName);
+            newRequest.onsuccess = function(){
+                var clerk = newRequest.result;
                 var requestArray = clerk.requests;
-                var this_id = AddCase.parentElement.parentElement.parentElement.getAttribute('id');
+                var this_id = e.target.parentElement.parentElement.getAttribute('id');
                 requestArray = remover(requestArray, parseInt(this_id));
                 clerk.requests = requestArray;
+                console.log(clerk.requests);
                 requests.put(clerk);
+                displayRequest()
+                myFunction("declinesnackbar");
             }
         }
     }
-
     function remover(array, index){
         if (array.length == 1)
             return [];
@@ -181,9 +183,9 @@ function loadClerkData(){
     }
 
     function acceptRequest(e){
-        e.preventDefault()
+        e.preventDefault();
         e.target.parentElement.parentElement.innerHTML+=`
-        <div class="row">
+        <div class="additional-form row">
                 <div class="col-md-2 pl-12">
                     <div class="form-group">
                         <label for="cDate">Set court date:</label>
@@ -230,27 +232,27 @@ function loadClerkData(){
                 var request = requestObject.get(userName);
                 request.onsuccess= function(e){
                 var values=e.target.result;
-                var this_id=AddCase.parentElement.parentElement.parentElement.getAttribute('id') 
-                index=this_id       
-                var val=values.requests[index]
-                var caseID=`aw${i}`;
-                var status = 'active';
-                var plaintiff = val.caseInfo[1];            
-                var defendant = val.caseInfo[0]; 
-                var judge = judgeName.value;
-                var caseOpened = new Date();
-                var description = `${val.caseInfo[2]}:${val.caseInfo[3]}\n ${val.caseInfo[4]}` ;
-                var nextCourtDate =courtDate.value;
-                let caseObject = Court.transaction("Cases","readwrite").objectStore("Cases");
-                var caseOpened = new Date();
-                let theCase=new Case(caseID,status,plaintiff,defendant,judge,caseOpened,description,nextCourtDate)
-                caseObject.add(theCase);
-                values.requests.splice(index,1)
-                let requestObject2 = Court.transaction("Clerks","readwrite").objectStore("Clerks");
-                var request2 = requestObject.put(values);
-                request2.onsuccess= function(e){}
-                displayRequest()
-            }
+                    var this_id=AddCase.parentElement.parentElement.parentElement.getAttribute('id') 
+                    index=this_id       
+                    var val=values.requests[index]
+                    var caseID=`aw${i}`;
+                    var status = 'active';
+                    var plaintiff = val.caseInfo[1];            
+                    var defendant = val.caseInfo[0]; 
+                    var judge = judgeName.value;
+                    var caseOpened = new Date();
+                    var description = `${val.caseInfo[2]}:${val.caseInfo[3]}\n ${val.caseInfo[4]}` ;
+                    var nextCourtDate =courtDate.value;
+                    let caseObject = Court.transaction("Cases","readwrite").objectStore("Cases");
+                    var caseOpened = new Date();
+                    let theCase=new Case(caseID,status,plaintiff,defendant,judge,caseOpened,description,nextCourtDate)
+                    caseObject.add(theCase);
+                    values.requests.splice(index,1)
+                    let requestObject2 = Court.transaction("Clerks","readwrite").objectStore("Clerks");
+                    var request2 = requestObject.put(values);
+                    displayRequest();
+                    myFunction("acceptsnackbar");
+                }
         }
     }
 }
@@ -340,14 +342,8 @@ function loadJudgeData(){
     });
 }
 
-function clearSession(){
-    sessionStorage.clear();
-}
-
-function myFunction(id, caseno) {
+function myFunction(id) {
 	var x = document.getElementById(id);
-    var y = `Case ${caseno} `
-    x.innerHTML =  y + x.innerHTML;
 	x.className = "show";
 	setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
 }

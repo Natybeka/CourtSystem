@@ -27,13 +27,13 @@
                 <a class="nav-link" href="./cases.html">MY CASES</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="./Request.html">FILE REQUEST</a>
+                <a class="nav-link active" href="./Request.html">FILE REQUEST</a>
               </li>
               <li class="nav-item">
                   <a class="nav-link" href="./public_record.html">PUBLIC RECORDS</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="../index.html">LOG OUT</a>
+                    <a class="nav-link" href="../index.html" onclick="clearSession()">LOG OUT</a>
                   </li>
           </ul>
           
@@ -163,6 +163,11 @@
       }
     </script>
 
+    <script>
+      function clearSession(){
+        sessionStorage.clear();
+      } 
+    </script>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="../Assets/js/bootstrap.min.js" ></script>
