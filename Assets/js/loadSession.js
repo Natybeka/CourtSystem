@@ -112,7 +112,7 @@ function loadUserData(){
     } 
     
 }
-let i=6
+let i=5
 function loadClerkData(){
     const container = document.querySelector('#request-container');
     displayRequest()
@@ -157,7 +157,27 @@ function loadClerkData(){
     function listen(e){
         if (e.target.classList.contains('accept-button')){
             acceptRequest(e)    
-        } 
+        }
+        else if(e.target.classList.contains('decline-button')){
+            console.log("Are you here?");
+            let requests = Court.transaction("Clerks","readwrite").objectStore("Clerks");
+            requests.get(userName);
+            requests.onsuccess = function(){
+                var clerk = requests.result;
+                var requestArray = clerk.requests;
+                var this_id = AddCase.parentElement.parentElement.parentElement.getAttribute('id');
+                requestArray = remover(requestArray, parseInt(this_id));
+                clerk.requests = requestArray;
+                requests.put(clerk);
+            }
+        }
+    }
+
+    function remover(array, index){
+        if (array.length == 1)
+            return [];
+        return array.slice(0, index).concat(array.slice(index + 1, array.length));
+    
     }
 
     function acceptRequest(e){
@@ -213,10 +233,6 @@ function loadClerkData(){
                 var this_id=AddCase.parentElement.parentElement.parentElement.getAttribute('id') 
                 index=this_id       
                 var val=values.requests[index]
-                console.log(values)
-                console.log(index)
-                console.log(AddCase.parentElement.parentElement.parentElement)
-                console.log(val.caseInfo)
                 var caseID=`aw${i}`;
                 var status = 'active';
                 var plaintiff = val.caseInfo[1];            
@@ -228,19 +244,15 @@ function loadClerkData(){
                 let caseObject = Court.transaction("Cases","readwrite").objectStore("Cases");
                 var caseOpened = new Date();
                 let theCase=new Case(caseID,status,plaintiff,defendant,judge,caseOpened,description,nextCourtDate)
-                console.log(theCase)
                 caseObject.add(theCase);
                 values.requests.splice(index,1)
                 let requestObject2 = Court.transaction("Clerks","readwrite").objectStore("Clerks");
                 var request2 = requestObject.put(values);
                 request2.onsuccess= function(e){}
                 displayRequest()
-                }
             }
+        }
     }
-
-    
-
 }
 
 function loadJudgeData(){

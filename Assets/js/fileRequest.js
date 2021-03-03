@@ -1,5 +1,8 @@
+import {Request} from "./storage.js"
 const fileButton = document.querySelector("#file");
 const form = document.querySelector('#request-form');
+const confirm = document.querySelector('#confirmation');
+const formContainer = document.querySelector('#formContainer');
 
 
 fileButton.addEventListener('click', addRequest);
@@ -39,7 +42,14 @@ function addRequest(e) {
             minClerk.requests.push(caseRequest);
             clerkStoreRequest.put(minClerk);
             db.close();
-            form.reset()
+            formContainer.style.display = "none";
+            confirm.style.display = "block";
         }   
     }
+}
+
+function resetForm(){
+    form.reset();
+    formContainer.style.display = "block";
+    confirm.style.display = "none";
 }

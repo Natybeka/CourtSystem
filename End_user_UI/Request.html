@@ -39,7 +39,7 @@
           
         </div>
       </nav>
-      <div class="card container">
+      <div class="card container" id="formContainer">
         <div class="card-body">
           <h5 class="card-title">File a new request</h5>
           <p class="card-text">After sending this request your case will be reviewed and if found 
@@ -117,13 +117,51 @@
         </div>
       </div>
     </div>
+    
+    <div class="container" id="confirmation" style="display: none;">
+      <h2><span class="badge badge-secondary">You have successfully filed a request. Check you're cases for updates.
+        <Button class="btn btn-primary btn-sm" onclick="resetForm()">File Another Request</Button>
+      </span></h2>
+    </div>
+
       <footer class="bg-light sticky-bottom fixed-bottom">
         <div class="row px-4 fo-row">
           <div class="copy_right">
             <p>@2021. All rights reserved</p>
           </div>
         </div>
-       </footer>
+      </footer>
+
+    <script>
+      addPlaceholder()
+      function addPlaceholder() {
+        let db = indexedDB.open("CourtSystem",1);
+        db.onsuccess = function(e) {
+            let userName = sessionStorage.getItem("user");
+            let dbInstance = e.target.result;
+            let userStore = dbInstance.transaction("Users").objectStore("Users");
+
+            let placeholder = userStore.get(userName);
+            placeholder.onsuccess =  function(e) {
+              var user = placeholder.result;
+              console.log(user);
+              var text = user.fullName;
+              var plaintiffName = document.getElementById("pname");
+              plaintiffName.setAttribute('placeholder',text);
+              plaintiffName.disabled = true;
+            }
+            dbInstance.close();
+        }
+      }
+      const confirm = document.querySelector('#confirmation');
+      const formContainer = document.querySelector('#formContainer');
+      const form = document.querySelector('#request-form');
+      function resetForm(){
+          form.reset();
+          formContainer.style.display = "block";
+          confirm.style.display = "none";
+      }
+    </script>
 
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
