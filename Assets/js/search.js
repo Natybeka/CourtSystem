@@ -12,7 +12,7 @@ searchBtn.onclick =()=>{
   if(searchInput.value != ""){
     var values = searchInput.value;
     searchData.classList.remove("active");
-    searchData.innerHTML = "You just typed " + "<span style='font-weight: 500;'>" + values + "</span>";
+    
   }else{
     searchData.textContent = "";
   }
@@ -25,19 +25,19 @@ cancelBtn.onclick =()=>{
   searchData.classList.toggle("active");
   searchInput.value = "";
 }
-// const searchBtn = document.getElementById('searchBtn');
+const searchIcon = document.getElementById('.search-icon');
 
-// searchBtn.addEventListener('click', search)
+searchIcon.addEventListener('click', search)
 
-// function search(){
-//     let searchInput = document.getElementById('searchInput').value;  
-//     let casesByNumber = document.querySelectorAll('.caseNumber');
+function search(){
+    let searchInput = document.getElementById('searchInput').value;  
+    let casesByNumber = document.querySelectorAll('.caseNumber');
     
-//     casesByNumber.forEach( function(cas) {
-//         if (cas.textContent.indexOf(searchInput) == -1) {
-//             cas.parentElement.parentElement.style.display = "none";
-//         } else {
-//             cas.parentElement.parentElement.style.display = "block";
-//         }
-//     })
-// }
+    casesByNumber.forEach( function(cas) {
+        if (cas.textContent.indexOf(searchInput) == -1) {
+            cas.parentElement.parentElement.style.display = "none";
+        } else {
+            cas.parentElement.parentElement.style.display = "block";
+        }
+    })
+}
