@@ -68,7 +68,6 @@ function loadUserData(){
                                         <h5 class="card-title"> Case Title: ${item.plaintiff + " Vs " + item.defendant}</h5>
                                         <h6 class="card-subtitle mb-2">Case Number: ${item.caseID}</h6>
                                         <p class="card-text lead">${item.description}</p>
-                                        <a href="#" class="btn btn-primary">See Detail</a>
                                     </div>
                                 </div>
                     </div>                       
@@ -105,7 +104,6 @@ function loadUserData(){
                                         <h5 class="card-title"> Case Title: ${item.plaintiff + " Vs " + item.defendant}</h5>
                                         <h6 class="card-subtitle mb-2">Case Number: ${item.caseID}</h6>
                                         <p class="card-text lead">${item.description}</p>
-                                        <a href="#" class="btn btn-primary">See Detail</a>
                                     </div>
                                 </div>
                     </div>                       
