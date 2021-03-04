@@ -115,25 +115,17 @@ document.addEventListener('DOMContentLoaded', () => {
         Court = e.target.result;
         // console.log("Database is ready"); 
         let userObject = Court.transaction("Users", "readwrite").objectStore("Users");
-        userObject.add(new User("uniqueUser", "Natnael Bekabtu", "User", encrypt("zembel27")));
+        userObject.add(new User("uniqueUser", "Natnael Bekabtu", "User", encrypt("password")));
         // console.log("Added first User");
-        let userObject2 = Court.transaction("Users", "readwrite").objectStore("Users");
-        userObject2.add(new User("uniqueUser2", "Natnael Bekabtu", "User", encrypt("zembel27")));
-        // console.log("Added seconde User");
+        
 
         let Clerk1 = Court.transaction("Clerks", "readwrite").objectStore("Clerks");
         Clerk1.add(new Clerk([], "Clerk1", "First Clerk", "Clerk", encrypt("password")));
         // console.log("Added seconde User");
 
-        let Clerk2 = Court.transaction("Clerks", "readwrite").objectStore("Clerks");
-        Clerk2.add(new Clerk([], "Clerk2", "Second Clerk", "Clerk", encrypt("password")));
-
         let Judge1 = Court.transaction("Judges", "readwrite").objectStore("Judges");
         Judge1.add(new Judge([], "Yemame234", "First Judge", "Judge", encrypt("password")));
         // console.log("Added seconde User");
-
-        let Judge2 = Court.transaction("Judges", "readwrite").objectStore("Judges");
-        Judge2.add(new Judge([], "erwqwe34", "Second Judge", "Judge", encrypt("password")));
 
         // let userObject4 = Court.transaction("Judges", "readwrite").objectStore("Judges");
         // userObject4.add(new User("Judge1", "Natnael Bekabtu", "Judge", "zembel27"));
